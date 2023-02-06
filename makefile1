@@ -1,0 +1,9 @@
+.PHONY: all
+all:
+	mkdir -p build
+	gcc -I include -c main.c -o build/main.o
+	gcc -I include -c linked_list.c -o build/linked_list.o
+	gcc -I include -c fizzbuzz.c -o build/fizzbuzz.o
+	gcc -I include -c fibonacci.c -o build/fibonacci.o
+	gcc -c func.s -o build/func.o
+	gcc build/*.o -o demo

@@ -12,6 +12,7 @@ struct ll_node *ll_push_head(linked_list *list, void *data) {
     list->head = node;
     if (!node->next) list->tail = node;
 
+    list->len++;
     return node;
 }
 
@@ -26,6 +27,7 @@ struct ll_node *ll_push_tail(linked_list *list, void *data) {
     list->tail = node;
     if (!node->prev) list->head = node;
 
+    list->len++;
     return node;
 }
 
@@ -38,6 +40,7 @@ void *ll_pop_head(linked_list *list) {
     if (list->head) list->head->prev = NULL;
 
     free(node);
+    list->len--;
     return dat;
 }
 
@@ -50,6 +53,7 @@ void *ll_pop_tail(linked_list *list) {
     if (list->tail) list->tail->next = NULL;
 
     free(node);
+    list->len--;
     return dat;
 }
 
@@ -73,4 +77,5 @@ void ll_delete(linked_list *list, struct ll_node *to_delete) {
     if (to_delete->prev) to_delete->prev->next = to_delete->next;
     if (to_delete->next) to_delete->next->prev = to_delete->prev;
     free(to_delete);
+    list->len--;
 }
