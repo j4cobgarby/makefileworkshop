@@ -2,33 +2,31 @@ CC=gcc
 LD=gcc
 AS=gcc
 
-ASFLAGS=
-CFLAGS=-Iinclude
+CFLAGS=-Iinclude -O2
 LDFLAGS=
+ASFLAGS= -O2
 
-EXE=demo
+CFILES=$(shell find . -type f -name '*.c' -printf "%f\n")
+ASFILES=$(shell find . -type f -name '*.s' -printf "%f\n")
+OBJ=$(CFILES:%.c=%.o) $(ASFILES:%.s=%.o)
+
 BUILD=build
-OBJS=$(BUILD)/main.c.o \
-	 $(BUILD)/linked_list.c.o \
-	 $(BUILD)/fibonacci.c.o \
-	 $(BUILD)/fizzbuzz.c.o \
-	 $(BUILD)/func.s.o \
+EXE=demo
 
 .PHONY: all
-all: demo
+all: $(addprefix build/, $(OBJ))
+	$(LD) $(LDFLAGS) $^ -o $(EXE)
 
 .PHONY: clean
 clean:
 	rm -rf $(BUILD)
 	rm -f $(EXE)
 
-demo: $(OBJS)
-	$(LD) $^ $(LDFLAGS) -o $@ 
-
-build/%.c.o: %.c
-	mkdir -p $(BUILD)
+$(BUILD)/%.o: %.c $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-build/%.s.o: %.s
+$(BUILD)/%.o: %.s $(BUILD)
+	$(AS) $(ASFLAGS) -c $< -o $@
+
+$(BUILD):
 	mkdir -p $(BUILD)
-	$(AS) -c $< -o $@
