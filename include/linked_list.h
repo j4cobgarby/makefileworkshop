@@ -10,8 +10,8 @@ struct ll_node {
 
 typedef struct {struct ll_node *head; struct ll_node *tail;} linked_list;
 
-void ll_push_head(linked_list *list, void *data);
-void ll_push_tail(linked_list *list, void *data);
+struct ll_node *ll_push_head(linked_list *list, void *data);
+struct ll_node *ll_push_tail(linked_list *list, void *data);
 
 void *ll_pop_head(linked_list *list);
 void *ll_pop_tail(linked_list *list);

@@ -1,7 +1,7 @@
 #include "linked_list.h"
 #include <stdlib.h>
 
-void ll_push_head(linked_list *list, void *data) {
+struct ll_node *ll_push_head(linked_list *list, void *data) {
     struct ll_node *node = malloc(sizeof(struct ll_node));
 
     node->ptr = data;
@@ -10,9 +10,12 @@ void ll_push_head(linked_list *list, void *data) {
 
     if (list->head) list->head->prev = node;
     list->head = node;
+    if (!node->next) list->tail = node;
+
+    return node;
 }
 
-void ll_push_tail(linked_list *list, void *data) {
+struct ll_node *ll_push_tail(linked_list *list, void *data) {
     struct ll_node *node = malloc(sizeof(struct ll_node));
 
     node->ptr = data;
@@ -21,6 +24,9 @@ void ll_push_tail(linked_list *list, void *data) {
 
     if (list->tail) list->tail->next = node;
     list->tail = node;
+    if (!node->prev) list->head = node;
+
+    return node;
 }
 
 void *ll_pop_head(linked_list *list) {

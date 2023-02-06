@@ -8,8 +8,10 @@ EXE=demo
 BUILD=build
 OBJS=$(BUILD)/main.o $(BUILD)/linked_list.o
 
+.PHONY: all
 all: demo
 
+.PHONY: clean
 clean:
 	rm -rf $(BUILD)
 	rm -f $(EXE)
