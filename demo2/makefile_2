@@ -1,0 +1,7 @@
+OBJS = main.o range_f.o
+
+all: $(OBJS)
+	gcc $(OBJS) -o demo
+
+%.o: %.c
+	gcc -c $^ -o $@
